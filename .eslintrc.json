@@ -1,6 +1,7 @@
 {
   "overrides": [
     {
+      "files": ["*.ts", "*.tsx"], // Specify the file types for the overrides
       "env": {
         "production": true
       },
