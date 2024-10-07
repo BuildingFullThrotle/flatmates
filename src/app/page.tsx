@@ -1,11 +1,10 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center">
-      <h1 className="text-4xl font-bold">Find My Roommate</h1>
-      <p className="text-2xl text-gray-500">
-        Find My Roommate is a platform that helps you find a roommate for your
-        apartment, pg, house, etc.
-      </p>
+    <div className="flex flex-col justify-center items-center h-screen w-full gap-[5px]">
+      <h1 className="text-4xl font-bold">Find My Flatmate</h1>
+      <p className="font-semibold text-muted-foreground">By BuildingFullThrotle</p>
     </div>
   );
 }
