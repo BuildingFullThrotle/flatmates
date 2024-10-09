@@ -1,7 +1,8 @@
 'use client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { zodResolver } from "@hookform/resolvers/zod"
-import React from 'react'
+import React, { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import {
     Form,
@@ -26,6 +27,7 @@ export const signInSchema = z.object({
 })
 
 const SignInForm = () => {
+    const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
     const form = useForm<z.infer<typeof signInSchema>>({
         resolver: zodResolver(signInSchema),
@@ -37,16 +39,15 @@ const SignInForm = () => {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof signInSchema>) {
+        setLoading(true)
         const res = await signIn(values)
         if (res.success) {
             toast.success('Login successful')
             router.push('/dashboard')
         } else {
+            setLoading(false)
             toast.error(res.error)
         }
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
     }
     return (
         <Card>
@@ -70,6 +71,7 @@ const SignInForm = () => {
                                             type='email'
                                             placeholder='Enter your email...'
                                             {...field}
+                                            disabled={loading}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -91,14 +93,18 @@ const SignInForm = () => {
                                                 e.target.value = e.target.value.trim();
                                                 field.onChange(e);
                                             }}
+                                            disabled={loading}
                                         />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type='submit' className='self-start'>
+                        <Button type='submit' className='self-start' disabled={loading}>
                             Login
+                            {
+                                loading && <Loader2 className='animate-spin ml-2 size-4' />
+                            }
                         </Button>
                     </form>
                 </Form>

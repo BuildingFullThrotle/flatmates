@@ -1,7 +1,7 @@
 'use client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { zodResolver } from "@hookform/resolvers/zod"
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
     Form,
@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button'
 import { signUp } from './auth.action'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { Loader, Loader2 } from 'lucide-react'
 
 export const signUpSchema = z.object({
     name: z.string().min(5),
@@ -31,6 +32,7 @@ export const signUpSchema = z.object({
 })
 
 const SignUpForm = () => {
+    const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
     const form = useForm<z.infer<typeof signUpSchema>>({
         resolver: zodResolver(signUpSchema),
@@ -44,16 +46,15 @@ const SignUpForm = () => {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof signUpSchema>) {
+        setLoading(true)
         const res = await signUp(values)
         if (res.success) {
             toast.success('Account created successfully')
             router.push('/dashboard')
         } else {
+            setLoading(false)
             toast.error(res.error)
         }
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
     }
     return (
         <Card className='min-w-[500px]'>
@@ -143,6 +144,7 @@ const SignUpForm = () => {
                         />
                         <Button type='submit' className='self-start'>
                             Sign Up
+                            <Loader2 className='animate-spin size-4 ml-2'/>
                         </Button>
                     </form>
                 </Form>
