@@ -10,7 +10,8 @@ const TestPage = () => {
     const testFlatbuddyBackend = async () => {
         setTestingFlatbuddyBackend(true)
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/test`)
+            console.log(process.env.NEXT_PUBLIC_URL)
+            const response = await fetch('/api/test')
             const data = await response.json()
             if(data.status === 'Up and Running') {
                 toast.success('Flatbuddy-backend is running')
