@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Loader2, X } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
+import { testBackendAction } from "./test.action"
 
 const TestPage = () => {
     const [testingFlatbuddyBackend, setTestingFlatbuddyBackend] = useState<boolean>(false)
@@ -10,16 +11,7 @@ const TestPage = () => {
     const testFlatbuddyBackend = async () => {
         setTestingFlatbuddyBackend(true)
         try {
-            const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test/`
-            console.log(apiUrl)
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
-            })
-            const data = await response.json()
+            const data = await testBackendAction();
             if(data.status === 'Up and Running') {
                 toast.success('Flatbuddy-backend is running')
                 setTestingFlatbuddyBackendResult(true)
