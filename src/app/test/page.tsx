@@ -10,8 +10,7 @@ const TestPage = () => {
     const testFlatbuddyBackend = async () => {
         setTestingFlatbuddyBackend(true)
         try {
-            console.log(process.env.NEXT_PUBLIC_URL)
-            const response = await fetch('/api/test')
+            const response = await fetch('https://flatbuddy-dev.vercel.app/api/test')
             const data = await response.json()
             if(data.status === 'Up and Running') {
                 toast.success('Flatbuddy-backend is running')
