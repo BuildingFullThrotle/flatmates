@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Loader2, X } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
+<<<<<<< HEAD
+=======
+import { testBackendAction } from "./test.action"
+>>>>>>> upstream/master
 
 const TestPage = () => {
     const [testingFlatbuddyBackend, setTestingFlatbuddyBackend] = useState<boolean>(false)
@@ -10,8 +14,12 @@ const TestPage = () => {
     const testFlatbuddyBackend = async () => {
         setTestingFlatbuddyBackend(true)
         try {
+<<<<<<< HEAD
             const response = await fetch('http://localhost:3000/api/test')
             const data = await response.json()
+=======
+            const data = await testBackendAction();
+>>>>>>> upstream/master
             if(data.status === 'Up and Running') {
                 toast.success('Flatbuddy-backend is running')
                 setTestingFlatbuddyBackendResult(true)
