@@ -34,6 +34,7 @@ export const signUpSchema = z.object({
 const SignUpForm = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
+
     const form = useForm<z.infer<typeof signUpSchema>>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
@@ -50,6 +51,7 @@ const SignUpForm = () => {
         const res = await signUp(values)
         if (res.success) {
             toast.success('Account created successfully')
+            setLoading(false);
             router.push('/dashboard')
         } else {
             setLoading(false)
@@ -142,7 +144,7 @@ const SignUpForm = () => {
                                 </FormItem>
                             )}
                         />
-                        <Button type='submit' className='self-start'>
+                        <Button type='submit' className='self-start' disabled={loading}>
                             Sign Up
                             <Loader2 className='animate-spin size-4 ml-2'/>
                         </Button>
